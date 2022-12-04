@@ -3,11 +3,11 @@ from itertools import groupby
 ## Part 1
 
 # Read input
-with open('day1input.txt') as f:
-  calories = f.readlines()
+with open("day1input.txt") as f:
+    calories = f.readlines()
 
 # Split into chunks
-indexes = (list(g) for _, g in groupby(calories, key='\n'.__ne__))
+indexes = (list(g) for _, g in groupby(calories, key="\n".__ne__))
 grouped_calories = [a + b for a, b in zip(indexes, indexes)]
 
 # Sum chunks
@@ -15,13 +15,13 @@ grouped_calories = [a + b for a, b in zip(indexes, indexes)]
 total_cals = []
 
 for elf in grouped_calories:
-  total_cal = 0
-  for food in elf:
-    if (food != '\n'):
-      num_string = food[:-1]
-      num = int(num_string)
-      total_cal += num
-  total_cals.append(total_cal)
+    total_cal = 0
+    for food in elf:
+        if food != "\n":
+            num_string = food[:-1]
+            num = int(num_string)
+            total_cal += num
+    total_cals.append(total_cal)
 
 # Output highest
 
