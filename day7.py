@@ -1,5 +1,3 @@
-from pprint import pprint
-
 ## Part 1
 
 # Read input
