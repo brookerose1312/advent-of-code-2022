@@ -1,45 +1,43 @@
 ## Part 1
 
 # Read input
-with open("day6input.txt") as f:
+with open("day6input.txt", "r", encoding="utf-8") as f:
     buffer = f.read()
 
 # set up window
-packetMarkerBuffer = ""
+packet_marker_buffer = ""
 # set up marker
-startOfPacket = 0
+start_of_packet = 0
 
-for charIndex in range(len(buffer)):
-    char = buffer[charIndex]
-    if len(packetMarkerBuffer) < 4:
-        packetMarkerBuffer += char
+for char_index, char in enumerate(buffer):
+    if len(packet_marker_buffer) < 4:
+        packet_marker_buffer += char
         continue
-    if len(packetMarkerBuffer) == 4:
-        if len(set(packetMarkerBuffer)) == len(packetMarkerBuffer):
-            startOfPacket = charIndex
+    if len(packet_marker_buffer) == 4:
+        if len(set(packet_marker_buffer)) == len(packet_marker_buffer):
+            start_of_packet = char_index
             break
         else:
-            packetMarkerBuffer = packetMarkerBuffer[1:] + char
+            packet_marker_buffer = packet_marker_buffer[1:] + char
 
-print(startOfPacket)
+print(start_of_packet)
 
 ## Part 2
 
 # set up window
-messageMarkerBuffer = ""
+message_marker_buffer = ""
 # set up marker
-startOfMessage = 0
+start_of_message = 0
 
-for charIndex in range(len(buffer)):
-    char = buffer[charIndex]
-    if len(messageMarkerBuffer) < 14:
-        messageMarkerBuffer += char
+for char_index, char in enumerate(buffer):
+    if len(message_marker_buffer) < 14:
+        message_marker_buffer += char
         continue
-    if len(messageMarkerBuffer) == 14:
-        if len(set(messageMarkerBuffer)) == len(messageMarkerBuffer):
-            startOfMessage = charIndex
+    if len(message_marker_buffer) == 14:
+        if len(set(message_marker_buffer)) == len(message_marker_buffer):
+            start_of_message = char_index
             break
         else:
-            messageMarkerBuffer = messageMarkerBuffer[1:] + char
+            message_marker_buffer = message_marker_buffer[1:] + char
 
-print(startOfMessage)
+print(start_of_message)

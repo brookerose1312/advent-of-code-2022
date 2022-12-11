@@ -1,7 +1,7 @@
 ## Part 1
 
 # Read input
-with open("day3input.txt") as f:
+with open("day3input.txt", "r", encoding="utf-8") as f:
     rucksacks = f.readlines()
 
 # Build priority dict
@@ -13,31 +13,31 @@ for i in range(27, 53):
     priorities[chr(ord("A") + i - 27)] = i
 
 # Sum priorities of common items
-totalPriority = 0
+total_priority = 0
 
 for rucksack in rucksacks:
     fixedsack = rucksack.strip()
-    totalItems = len(fixedsack)
-    compartment1 = rucksack[0 : totalItems // 2]
-    compartment2 = rucksack[totalItems // 2 :]
+    total_items = len(fixedsack)
+    compartment1 = rucksack[0 : total_items // 2]
+    compartment2 = rucksack[total_items // 2 :]
     commonItem = sorted(set.intersection(set(compartment1), set(compartment2)))[0]
-    totalPriority += priorities[commonItem]
+    total_priority += priorities[commonItem]
 
-print(totalPriority)
+print(total_priority)
 
 ## Part 2
 
-totalBadgePriority = 0
+total_badge_priority = 0
 
-for rucksackIndex in range(0, len(rucksacks), 3):
-    rucksack1 = rucksacks[rucksackIndex].strip()
-    rucksack2 = rucksacks[rucksackIndex + 1].strip()
-    rucksack3 = rucksacks[rucksackIndex + 2].strip()
+for rucksack_index in range(0, len(rucksacks), 3):
+    rucksack1 = rucksacks[rucksack_index].strip()
+    rucksack2 = rucksacks[rucksack_index + 1].strip()
+    rucksack3 = rucksacks[rucksack_index + 2].strip()
     badge = sorted(
         set.intersection(
             set.intersection(set(rucksack1), set(rucksack2)), set(rucksack3)
         )
     )[0]
-    totalBadgePriority += priorities[badge]
+    total_badge_priority += priorities[badge]
 
-print(totalBadgePriority)
+print(total_badge_priority)

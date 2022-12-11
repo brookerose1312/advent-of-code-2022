@@ -1,84 +1,84 @@
 ## Part 1
 
 # Read input
-with open("day5input.txt") as f:
-    stackInput = f.readlines()
+with open("day5input.txt", "r", encoding="utf-8") as f:
+    stack_input = f.readlines()
 
 # Split into stacks and movements
-stackInputData = []
-stackInputMovements = []
+stack_input_data = []
+stack_input_movements = []
 
-dataDone = False
+data_is_done = False
 
-for line in stackInput:
+for line in stack_input:
     if line == "\n":
-        dataDone = True
+        data_is_done = True
         continue
-    if not dataDone:
-        stackInputData.insert(0, line.rstrip())
+    if not data_is_done:
+        stack_input_data.insert(0, line.rstrip())
     else:
-        stackInputMovements.append(line.strip())
+        stack_input_movements.append(line.strip())
 
 # Generate actual stacks
 
 stacks = []
-part2Stacks = []
+part_two_stacks = []
 # calculate number of columns
-numCols = int(stackInputData[0].strip().split(" ")[-1])
-for colIndex in range(numCols):
+num_cols = int(stack_input_data[0].strip().split(" ")[-1])
+for col_index in range(num_cols):
     col = []
     # loop over actual rows of stacks
-    for rowIndex in range(1, len(stackInputData)):
-        row = stackInputData[rowIndex]
-        colSelector = (colIndex) * 4
-        item = row[colSelector : colSelector + 4].strip()
+    for row_index in range(1, len(stack_input_data)):
+        row = stack_input_data[row_index]
+        col_selector = col_index * 4
+        item = row[col_selector : col_selector + 4].strip()
         if item != "":
             col.append(item)
     stacks.append(col)
     # col copy because otherwise part2Stacks and stacks would be identical
-    part2Stacks.append(col.copy())
+    part_two_stacks.append(col.copy())
 
 # Move items in stacks
 
-for movement in stackInputMovements:
-    movementComponents = movement.split(" ")
-    numToMove = int(movementComponents[1])
-    fromCol = int(movementComponents[3])
-    toCol = int(movementComponents[5])
+for movement in stack_input_movements:
+    movement_components = movement.split(" ")
+    num_to_move = int(movement_components[1])
+    from_col = int(movement_components[3])
+    to_col = int(movement_components[5])
     # move 1-by-1
-    for i in range(numToMove):
-        item = stacks[fromCol - 1].pop()
-        stacks[toCol - 1].append(item)
+    for i in range(num_to_move):
+        item = stacks[from_col - 1].pop()
+        stacks[to_col - 1].append(item)
 
-stackTops = ""
+stack_tops = ""
 
 for stack in stacks:
-    stackTops += stack[-1][1]
+    stack_tops += stack[-1][1]
 
 print("part 1 stack tops")
-print(stackTops)
+print(stack_tops)
 
 ## Part 2
 
 # Move items in stacks
 
-for movement in stackInputMovements:
-    movementComponents = movement.split(" ")
-    numToMove = int(movementComponents[1])
-    fromCol = int(movementComponents[3])
-    toCol = int(movementComponents[5])
+for movement in stack_input_movements:
+    movement_components = movement.split(" ")
+    num_to_move = int(movement_components[1])
+    from_col = int(movement_components[3])
+    to_col = int(movement_components[5])
     # move a chunk
-    movedComponents = []
-    for i in range(numToMove):
-        item = part2Stacks[fromCol - 1].pop()
-        movedComponents.insert(0, item)
-    for component in movedComponents:
-        part2Stacks[toCol - 1].append(component)
+    moved_components = []
+    for i in range(num_to_move):
+        item = part_two_stacks[from_col - 1].pop()
+        moved_components.insert(0, item)
+    for component in moved_components:
+        part_two_stacks[to_col - 1].append(component)
 
-part2StackTops = ""
+part_two_stack_tops = ""
 
-for stack in part2Stacks:
-    part2StackTops += stack[-1][1]
+for stack in part_two_stacks:
+    part_two_stack_tops += stack[-1][1]
 
 print("part 2 stack tops")
-print(part2StackTops)
+print(part_two_stack_tops)

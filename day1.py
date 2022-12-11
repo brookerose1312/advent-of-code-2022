@@ -3,7 +3,7 @@ from itertools import groupby
 ## Part 1
 
 # Read input
-with open("day1input.txt") as f:
+with open("day1input.txt", "r", encoding="utf-8") as f:
     calories = f.readlines()
 
 # Split into chunks

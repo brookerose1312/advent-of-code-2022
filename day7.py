@@ -1,22 +1,24 @@
 ## Part 1
 
 # Read input
-with open("day7input.txt") as f:
+with open("day7input.txt", "r", encoding="utf-8") as f:
     cliOutput = f.readlines()
 
 
 class File:
-    def __init__(self, index, parent=None, size=0):
-        self.index = index
+    """A class that represents a file inside of a filesystem"""
+
+    def __init__(self, incoming_index, parent=None, incoming_size=0):
+        self.index = incoming_index
         self.parent = parent
         self.contents = {}
-        self.size = size
-        self.sizeBelow = size
+        self.size = incoming_size
+        self.size_below = incoming_size
 
 
 root = File(0)
 index = 1
-fileDict = {}
+file_dict = {}
 curr = root
 for line in cliOutput:
     # get cli line and split into parts
@@ -41,53 +43,53 @@ for line in cliOutput:
         # is a dir
         if line[0] == "dir":
             dirname = line[1]
-            fileDict[index] = File(index, parent=curr)
-            curr.contents[dirname] = fileDict[index]
+            file_dict[index] = File(index, parent=curr)
+            curr.contents[dirname] = file_dict[index]
             index += 1
         # is a proper file
         else:
             size = int(line[0])
             filename = line[1]
-            fileDict[index] = File(index, parent=curr, size=size)
-            curr.contents[filename] = fileDict[index]
+            file_dict[index] = File(index, parent=curr, incoming_size=size)
+            curr.contents[filename] = file_dict[index]
             index += 1
 
 ans = 0
-toVisit = [root]
+to_visit = [root]
 visited = set()
-while len(toVisit) > 0:
-    file = toVisit[-1]
+while len(to_visit) > 0:
+    file = to_visit[-1]
     # all subfiles (including directories) of current file
     for sub in file.contents.values():
         if sub.index not in visited:
-            toVisit.append(sub)
+            to_visit.append(sub)
             break
     # finally, deal with the current file
     else:
-        file = toVisit.pop()
+        file = to_visit.pop()
         visited.add(file.index)
         if file.parent is not None:
-            file.parent.sizeBelow += file.sizeBelow
-        if (file.sizeBelow <= 100000) and (len(file.contents) > 0):
-            ans += file.sizeBelow
+            file.parent.size_below += file.size_below
+        if (file.size_below <= 100000) and (len(file.contents) > 0):
+            ans += file.size_below
 
 print(ans)
 
 
 ## Part 2
 
-totalUsed = root.sizeBelow
-totalFree = 70000000 - totalUsed
-amountToDelete = 30000000 - totalFree
+total_used = root.size_below
+total_free = 70000000 - total_used
+amount_to_delete = 30000000 - total_free
 
 # find smallest directory to delete
-part2Ans = root.sizeBelow
-for index, file in fileDict.items():
+part_two_ans = root.size_below
+for index, file in file_dict.items():
     if (
         (len(file.contents) > 0)
-        and (file.sizeBelow < part2Ans)
-        and (file.sizeBelow >= amountToDelete)
+        and (file.size_below < part_two_ans)
+        and (file.size_below >= amount_to_delete)
     ):
-        part2Ans = file.sizeBelow
+        part_two_ans = file.size_below
 
-print(part2Ans)
+print(part_two_ans)

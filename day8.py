@@ -1,106 +1,106 @@
 ## Part 1
 
 # Read input
-with open("day8input.txt") as f:
+with open("day8input.txt", "r", encoding="utf-8") as f:
     trees = f.readlines()
 
 # calculate number of trees on edge
-numVisible = (len(trees) * 2) + (len(trees[0].strip()) * 2) - 4
+num_visible = (len(trees) * 2) + (len(trees[0].strip()) * 2) - 4
 
 # loop over interior trees and see if trees are visible
 for row in range(1, len(trees) - 1):
-    treeRow = trees[row].strip()
-    for column in range(1, len(treeRow) - 1):
+    tree_row = trees[row].strip()
+    for column in range(1, len(tree_row) - 1):
         tree = int(trees[row][column])
         visible = False
         # check trees to left
-        for leftTreeIndex in range(0, column):
-            leftTree = int(trees[row][leftTreeIndex])
-            if leftTree >= tree:
+        for left_tree_index in range(0, column):
+            left_tree = int(trees[row][left_tree_index])
+            if left_tree >= tree:
                 break
-            if leftTree < tree and leftTreeIndex == column - 1:
+            if left_tree < tree and left_tree_index == column - 1:
                 visible = True
         if visible == True:
-            numVisible += 1
+            num_visible += 1
             continue
 
         # check trees above
-        for upTreeIndex in range(0, row):
-            upTree = int(trees[upTreeIndex][column])
-            if upTree >= tree:
+        for up_tree_index in range(0, row):
+            up_tree = int(trees[up_tree_index][column])
+            if up_tree >= tree:
                 break
-            if upTree < tree and upTreeIndex == row - 1:
+            if up_tree < tree and up_tree_index == row - 1:
                 visible = True
         if visible == True:
-            numVisible += 1
+            num_visible += 1
             continue
 
         # check trees to right
-        for rightTreeIndex in range(column + 1, len(treeRow)):
-            rightTree = int(trees[row][rightTreeIndex])
-            if rightTree >= tree:
+        for right_tree_index in range(column + 1, len(tree_row)):
+            right_tree = int(trees[row][right_tree_index])
+            if right_tree >= tree:
                 break
-            if rightTree < tree and rightTreeIndex == len(treeRow) - 1:
+            if right_tree < tree and right_tree_index == len(tree_row) - 1:
                 visible = True
         if visible == True:
-            numVisible += 1
+            num_visible += 1
             continue
 
         # check trees below
-        for downTreeIndex in range(row + 1, len(trees)):
-            downTree = int(trees[downTreeIndex][column])
-            if downTree >= tree:
+        for down_tree_index in range(row + 1, len(trees)):
+            down_tree = int(trees[down_tree_index][column])
+            if down_tree >= tree:
                 break
-            if downTree < tree and downTreeIndex == len(trees) - 1:
+            if down_tree < tree and down_tree_index == len(trees) - 1:
                 visible = True
         if visible == True:
-            numVisible += 1
+            num_visible += 1
             continue
 
-print(numVisible)
+print(num_visible)
 
 ## Part 2
 
-scenicDict = {}
+scenic_dict = {}
 # Loop over interior trees and find highest scenic score
 
 for row in range(1, len(trees) - 1):
-    treeRow = trees[row].strip()
-    for column in range(1, len(treeRow) - 1):
+    tree_row = trees[row].strip()
+    for column in range(1, len(tree_row) - 1):
         tree = int(trees[row][column])
-        leftScore = 0
-        upScore = 0
-        rightScore = 0
-        downScore = 0
+        left_score = 0
+        up_score = 0
+        right_score = 0
+        down_score = 0
         # calculate leftScore
-        for leftTreeIndex in range(column-1, -1, -1):
-            leftTree = int(trees[row][leftTreeIndex])
-            leftScore += 1
-            if leftTree >= tree:
+        for left_tree_index in range(column - 1, -1, -1):
+            left_tree = int(trees[row][left_tree_index])
+            left_score += 1
+            if left_tree >= tree:
                 break
 
         # calculate upScore
-        for upTreeIndex in range(row-1, -1, -1):
-            upTree = int(trees[upTreeIndex][column])
-            upScore += 1
-            if upTree >= tree:
+        for up_tree_index in range(row - 1, -1, -1):
+            up_tree = int(trees[up_tree_index][column])
+            up_score += 1
+            if up_tree >= tree:
                 break
 
         # calculate rightScore
-        for rightTreeIndex in range(column + 1, len(treeRow)):
-            rightTree = int(trees[row][rightTreeIndex])
-            rightScore += 1
-            if rightTree >= tree:
+        for right_tree_index in range(column + 1, len(tree_row)):
+            right_tree = int(trees[row][right_tree_index])
+            right_score += 1
+            if right_tree >= tree:
                 break
 
         # calculate downScore
-        for downTreeIndex in range(row + 1, len(trees)):
-            downTree = int(trees[downTreeIndex][column])
-            downScore += 1
-            if downTree >= tree:
+        for down_tree_index in range(row + 1, len(trees)):
+            down_tree = int(trees[down_tree_index][column])
+            down_score += 1
+            if down_tree >= tree:
                 break
 
-        scenicScore = leftScore * upScore * rightScore * downScore
-        scenicDict[(row, column)] = scenicScore
+        scenic_score = left_score * up_score * right_score * down_score
+        scenic_dict[(row, column)] = scenic_score
 
-print(max(scenicDict.values()))
+print(max(scenic_dict.values()))
