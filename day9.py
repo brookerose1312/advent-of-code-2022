@@ -1,5 +1,3 @@
-import copy
-
 ## Part 1
 
 # Read input
